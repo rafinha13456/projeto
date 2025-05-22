@@ -1,444 +1,692 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esporte Total - Classificação e Jogos</title>
+    <title>Brasileirão Série A 2025 </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .header-gradient {
-            background: linear-gradient(90deg, #0066cc 0%, #003366 100%);
-        }
         .team-logo {
             width: 24px;
             height: 24px;
             margin-right: 8px;
+            object-fit: contain;
+        }
+        .table-row:hover {
+            background-color: #f3f4f6;
         }
         .match-card {
             transition: all 0.3s ease;
         }
         .match-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .tab-active {
-            border-bottom: 3px solid #0066cc;
-            color: #0066cc;
-            font-weight: bold;
+        .top-scorer {
+            position: relative;
         }
-        .stripe-row:nth-child(even) {
-            background-color: #f8fafc;
+        .top-scorer::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #f59e0b, #ef4444);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .top-scorer:hover::after {
+            transform: scaleX(1);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .highlight {
+            animation: pulse 1.5s infinite;
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans">
-    <!-- Header -->
-    <header class="header-gradient text-white shadow-md">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <i class="fas fa-futbol text-2xl mr-2"></i>
-                    <h1 class="text-2xl font-bold">ESPORTE TOTAL</h1>
-                </div>
-                <nav class="hidden md:flex space-x-6">
-                    <a href="#" class="hover:text-blue-200">Futebol</a>
-                    <a href="#" class="hover:text-blue-200">Basquete</a>
-                    <a href="#" class="hover:text-blue-200">Tênis</a>
-                    <a href="#" class="hover:text-blue-200">Fórmula 1</a>
-                </nav>
-                <button class="md:hidden">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                <span class="text-green-600">Brasileirão</span> Série A 2025
+            </h1>
+            <p class="text-gray-600">Acompanhe a tabela, jogos e artilharia do campeonato brasileiro</p>
+            <div class="mt-4">
+                <span class="inline-block bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    Rodada 10 • Atualizado em 21/05/2025
+                </span>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
-        <!-- League Selector -->
-        <div class="mb-8 bg-white rounded-lg shadow p-4">
-            <div class="flex flex-wrap items-center justify-between">
-                <h2 class="text-xl font-bold mb-4 md:mb-0">Campeonato Brasileiro Série A</h2>
-                <div class="flex space-x-2">
-                    <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
-                        <i class="fas fa-table mr-1"></i> Classificação
-                    </button>
-                    <button class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
-                        <i class="fas fa-calendar-alt mr-1"></i> Jogos
-                    </button>
-                    <button class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
-                        <i class="fas fa-chart-line mr-1"></i> Estatísticas
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tabs -->
-        <div class="flex border-b mb-6">
-            <button class="tab-active px-4 py-2 mr-2">Classificação</button>
-            <button class="px-4 py-2 mr-2 hover:text-blue-600">Artilharia</button>
-            <button class="px-4 py-2 hover:text-blue-600">Próximos Jogos</button>
-        </div>
-
-        <!-- Classification Table -->
-        <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pos</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pts</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">J</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">V</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">E</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">D</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GP</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GC</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SG</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">%</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <!-- Top 4 (Libertadores) -->
-                        <tr class="stripe-row bg-green-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="../projeto/imagens/Palmeiras.png" alt="Palmeiras" class="team-logo">
-                                    Palmeiras
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">62</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">26</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">19</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">47</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+32</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">79.5</td>
-                        </tr>
-                        <tr class="stripe-row bg-green-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Flamengo" class="team-logo">
-                                    Flamengo
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">57</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">26</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">17</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">6</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">51</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">21</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+30</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">73.1</td>
-                        </tr>
-                        <tr class="stripe-row bg-green-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Internacional" class="team-logo">
-                                    Internacional
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">51</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">26</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">6</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">42</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">24</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+18</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">65.4</td>
-                        </tr>
-                        <tr class="stripe-row bg-green-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Corinthians" class="team-logo">
-                                    Corinthians
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">47</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">26</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">13</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">8</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">33</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">24</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+9</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">60.3</td>
-                        </tr>
-                        
-                        <!-- Pré-Libertadores -->
-                        <tr class="stripe-row bg-blue-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">5</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Fluminense" class="team-logo">
-                                    Fluminense
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">46</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">26</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">13</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">6</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">39</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+9</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">59.0</td>
-                        </tr>
-                        
-                        <!-- Sul-Americana -->
-                        <tr class="stripe-row bg-yellow-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">6</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Athletico-PR" class="team-logo">
-                                    Athletico-PR
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">45</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">26</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">13</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">6</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">33</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+5</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">57.7</td>
-                        </tr>
-                        
-                        <!-- Zona de rebaixamento -->
-                        <tr class="stripe-row bg-red-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">17</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Cuiabá" class="team-logo">
-                                    Cuiabá
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">25</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">26</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">21</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">36</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-15</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">32.1</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="px-6 py-4 bg-gray-50 text-xs text-gray-500">
-                <div class="flex flex-wrap items-center space-x-4">
-                    <div class="flex items-center mb-2 md:mb-0">
-                        <div class="w-3 h-3 bg-green-500 mr-2"></div>
-                        <span>Classificação para Libertadores</span>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Tabela de Classificação -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-green-600 px-6 py-4">
+                        <h2 class="text-xl font-bold text-white flex items-center">
+                            <i class="fas fa-table mr-2"></i> Classificação
+                        </h2>
                     </div>
-                    <div class="flex items-center mb-2 md:mb-0">
-                        <div class="w-3 h-3 bg-blue-500 mr-2"></div>
-                        <span>Pré-Libertadores</span>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">PTS</th>
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">J</th>
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">V</th>
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">E</th>
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">D</th>
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">GP</th>
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">GC</th>
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">SG</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                
+                                <tr class="table-row bg-green-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Palmeiras.png" alt="Palmeiras" class="team-logo">
+                                            <span class="font-medium">Palmeiras</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">22</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">+7</td>
+                                </tr>
+                                
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Flamengo_braz_logo.svg.webp" alt="Flamengo" class="team-logo">
+                                            <span class="font-medium">Flamengo</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">18</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">17</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">+13</td>
+                                </tr>
+                                
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Cruzeiro_Esporte_Clube_(logo).svg.webp" alt="Cruzeiro" class="team-logo">
+                                            <span class="font-medium">Cruzeiro</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">17</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">13</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">+6</td>
+                                </tr>
+                                
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/RedBullBragantino.png" alt="RB Bragantino" class="team-logo">
+                                            <span class="font-medium">RB Bragantino</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">17</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">+3</td>
+                                </tr>
+                                
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Ceará_Sporting_Club_logo.svg.png" alt="Ceará" class="team-logo">
+                                            <span class="font-medium">Ceará</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">26</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">22</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">+8</td>
+                                </tr>
+                                
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">6</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/ECBahia.png" alt="Bahia" class="team-logo">
+                                            <span class="font-medium">Bahia</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-600">0</td>
+                                </tr>
+                                
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Fluminense_FC_escudo.png" alt="Fluminense" class="team-logo">
+                                            <span class="font-medium">Fluminense</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-600">0</td>
+                                </tr>
+                                
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/corinthians.png" alt="Corinthians" class="team-logo">
+                                            <span class="font-medium">Corinthians</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">13</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-red-600">-2</td>
+                                </tr>
+                                <!-- Bragantino -->
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/250px-Atletico_mineiro_galo.png" alt="Atlético-MG" class="team-logo">
+                                            <span class="font-medium">Atlético-MG</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">13</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-600">0</td>
+                                </tr>
+                                <!-- Atlético-MG -->
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Botafogo_de_Futebol_e_Regatas_logo.svg.png" alt="Botafogo" class="team-logo">
+                                            <span class="font-medium">Botafogo</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">+5</td>
+                                </tr>
+                                <!-- Cruzeiro -->
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Brasao_do_Sao_Paulo_Futebol_Clube.svg.webp" alt="São Paulo" class="team-logo">
+                                            <span class="font-medium">São Paulo</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">6</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">+1</td>
+                                </tr>
+                                <!-- Internacional -->
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Mirassol_FC_logo.png" alt="Mirassol" class="team-logo">
+                                            <span class="font-medium">Mirassol</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">+2</td>
+                                </tr>
+                                <!-- Cuiabá -->
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">13</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/CRVascodaGama.png" alt="Vasco da Gama" class="team-logo">
+                                            <span class="font-medium">Vasco da Gama</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-red-600">-1</td>
+                                </tr>
+                                <!-- Fortaleza -->
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Fortaleza_EC_2018.png" alt="Fortaleza" class="team-logo">
+                                            <span class="font-medium">Fortaleza</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-green-600">+2</td>
+                                </tr>
+                                <!-- Vasco -->
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/SC_Internacional_Brazil_Logo.svg.png" alt="Internacional" class="team-logo">
+                                            <span class="font-medium">Internacional</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">13</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-red-600">-2</td>
+                                </tr>
+                                <!-- Corinthians -->
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">16</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Esporte_Clube_Vitória_logo.png" alt="Vitória" class="team-logo">
+                                            <span class="font-medium">Vitória</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">13</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-red-600">-3</td>
+                                </tr>
+                                <!-- Juventude -->
+                                <tr class="table-row bg-red-100">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">17</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Gremio_logo.svg.webp" alt="Grêmio" class="team-logo">
+                                            <span class="font-medium">Grêmio</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-red-600">-6</td>
+                                </tr>
+                                <!-- Criciúma -->
+                                <tr class="table-row bg-red-100">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">18</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/EC_Juventude.svg.png" alt="Juventude" class="team-logo">
+                                            <span class="font-medium">Juventude</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">21</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-red-600">-13</td>
+                                </tr>
+                                <!-- Vitória -->
+                                <tr class="table-row bg-red-100">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">19</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Santos_Logo.png.webp" alt="Santos" class="team-logo">
+                                            <span class="font-medium">Santos</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">6</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-red-600">-4</td>
+                                </tr>
+                                <!-- Atlético-GO -->
+                                <tr class="table-row bg-red-100">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img src="./imagens/Sport_Club_do_Recife.png" alt="Sport Recife" class="team-logo">
+                                            <span class="font-medium">Sport Recife</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-gray-900">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">0</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500">16</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-red-600">-12</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="flex items-center mb-2 md:mb-0">
-                        <div class="w-3 h-3 bg-yellow-500 mr-2"></div>
-                        <span>Sul-Americana</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-3 h-3 bg-red-500 mr-2"></div>
-                        <span>Zona de rebaixamento</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Next Matches -->
-        <h2 class="text-xl font-bold mb-4">Próximos Jogos</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            <!-- Match Card 1 -->
-            <div class="match-card bg-white rounded-lg shadow p-4">
-                <div class="text-center text-sm text-gray-500 mb-2">Rodada 27 - 15/10/2023 - 16:00</div>
-                <div class="flex justify-between items-center mb-2">
-                    <div class="flex items-center w-1/3 justify-end">
-                        <span class="font-medium text-right">Palmeiras</span>
-                        <img src="https://via.placeholder.com/32" alt="Palmeiras" class="w-6 h-6 ml-2">
-                    </div>
-                    <div class="px-4 font-bold text-lg">X</div>
-                    <div class="flex items-center w-1/3">
-                        <img src="https://via.placeholder.com/32" alt="Flamengo" class="w-6 h-6 mr-2">
-                        <span class="font-medium">Flamengo</span>
-                    </div>
-                </div>
-                <div class="text-center text-sm text-gray-500">Allianz Parque, São Paulo</div>
-            </div>
-            
-            <!-- Match Card 2 -->
-            <div class="match-card bg-white rounded-lg shadow p-4">
-                <div class="text-center text-sm text-gray-500 mb-2">Rodada 27 - 15/10/2023 - 19:00</div>
-                <div class="flex justify-between items-center mb-2">
-                    <div class="flex items-center w-1/3 justify-end">
-                        <span class="font-medium text-right">Corinthians</span>
-                        <img src="https://via.placeholder.com/32" alt="Corinthians" class="w-6 h-6 ml-2">
-                    </div>
-                    <div class="px-4 font-bold text-lg">X</div>
-                    <div class="flex items-center w-1/3">
-                        <img src="https://via.placeholder.com/32" alt="Internacional" class="w-6 h-6 mr-2">
-                        <span class="font-medium">Internacional</span>
-                    </div>
-                </div>
-                <div class="text-center text-sm text-gray-500">Neo Química Arena, São Paulo</div>
-            </div>
-            
-            <!-- Match Card 3 -->
-            <div class="match-card bg-white rounded-lg shadow p-4">
-                <div class="text-center text-sm text-gray-500 mb-2">Rodada 27 - 16/10/2023 - 20:00</div>
-                <div class="flex justify-between items-center mb-2">
-                    <div class="flex items-center w-1/3 justify-end">
-                        <span class="font-medium text-right">Fluminense</span>
-                        <img src="https://via.placeholder.com/32" alt="Fluminense" class="w-6 h-6 ml-2">
-                    </div>
-                    <div class="px-4 font-bold text-lg">X</div>
-                    <div class="flex items-center w-1/3">
-                        <img src="https://via.placeholder.com/32" alt="Athletico-PR" class="w-6 h-6 mr-2">
-                        <span class="font-medium">Athletico-PR</span>
-                    </div>
-                </div>
-                <div class="text-center text-sm text-gray-500">Maracanã, Rio de Janeiro</div>
-            </div>
-        </div>
-
-        <!-- Last Results -->
-        <h2 class="text-xl font-bold mb-4">Últimos Resultados</h2>
-        <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mandante</th>
-                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Placar</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Visitante</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr class="stripe-row">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14/10/2023</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="São Paulo" class="team-logo">
-                                    São Paulo
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-center text-gray-900">2 - 1</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Botafogo" class="team-logo">
-                                    Botafogo
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="stripe-row">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">14/10/2023</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Grêmio" class="team-logo">
-                                    Grêmio
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-center text-gray-900">1 - 1</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Santos" class="team-logo">
-                                    Santos
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="stripe-row">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">13/10/2023</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Vasco" class="team-logo">
-                                    Vasco
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-center text-gray-900">0 - 2</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <div class="flex items-center">
-                                    <img src="https://via.placeholder.com/24" alt="Fortaleza" class="team-logo">
-                                    Fortaleza
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="text-xl font-bold mb-4">ESPORTE TOTAL</h3>
-                    <p class="text-gray-400">Todas as notícias do mundo esportivo em um só lugar.</p>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-                    <div>
-                        <h4 class="text-lg font-semibold mb-4">Campeonatos</h4>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-400 hover:text-white">Brasileirão</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">Libertadores</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">Copa do Brasil</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-semibold mb-4">Esportes</h4>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-400 hover:text-white">Futebol</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">Basquete</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-white">Tênis</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-semibold mb-4">Redes Sociais</h4>
-                        <div class="flex space-x-4">
-                            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <div class="text-sm text-gray-600">
+                                <span class="font-medium">Legenda:</span>
+                                <span class="ml-2 px-2 py-1 bg-green-100 text-green-800 rounded">Libertadores</span>
+                                <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 rounded">Pré-Libertadores</span>
+                                <span class="ml-2 px-2 py-1 bg-yellow-100 text-yellow-800 rounded">Sul-Americana</span>
+                                <span class="ml-2 px-2 py-1 bg-red-100 text-red-800 rounded">Rebaixamento</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2023 Esporte Total. Todos os direitos reservados.</p>
+
+            <!-- Próximos Jogos e Artilharia -->
+            <div class="space-y-8">
+                <!-- Próximos Jogos -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-blue-600 px-6 py-4">
+                        <h2 class="text-xl font-bold text-white flex items-center">
+                            <i class="far fa-calendar-alt mr-2"></i> Próximos Jogos
+                        </h2>
+                    </div>
+                    <div class="divide-y divide-gray-200">
+                        <!-- Jogo 1 -->
+                        <div class="match-card p-4 hover:bg-blue-50">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center w-1/3">
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/KLDWYp-Ga4i4H6-Yu5W3kQ_48x48.png" alt="Flamengo" class="team-logo">
+                                    <span class="font-medium truncate">Flamengo</span>
+                                </div>
+                                <div class="text-center w-1/3">
+                                    <div class="text-sm text-gray-500">13/07 • 16:00</div>
+                                    <div class="font-bold text-lg mt-1">VS</div>
+                                    <div class="text-xs bg-gray-100 rounded-full px-2 py-1 inline-block mt-1">Maracanã</div>
+                                </div>
+                                <div class="flex items-center justify-end w-1/3">
+                                    <span class="font-medium truncate">Palmeiras</span>
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/SDfohqMvqgZeN1bMRs7j5w_48x48.png" alt="Palmeiras" class="team-logo ml-2">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Jogo 2 -->
+                        <div class="match-card p-4 hover:bg-blue-50">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center w-1/3">
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/8piQOzndGmApKy4f8YYFkQ_48x48.png" alt="Botafogo" class="team-logo">
+                                    <span class="font-medium truncate">Botafogo</span>
+                                </div>
+                                <div class="text-center w-1/3">
+                                    <div class="text-sm text-gray-500">14/07 • 18:00</div>
+                                    <div class="font-bold text-lg mt-1">VS</div>
+                                    <div class="text-xs bg-gray-100 rounded-full px-2 py-1 inline-block mt-1">Nilton Santos</div>
+                                </div>
+                                <div class="flex items-center justify-end w-1/3">
+                                    <span class="font-medium truncate">São Paulo</span>
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/0K3I5K1x8pr2fRii1JtfNg_48x48.png" alt="São Paulo" class="team-logo ml-2">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Jogo 3 -->
+                        <div class="match-card p-4 hover:bg-blue-50">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center w-1/3">
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/6hPRr0Ixq7xr0XQ5ZoSJ3g_48x48.png" alt="Bahia" class="team-logo">
+                                    <span class="font-medium truncate">Bahia</span>
+                                </div>
+                                <div class="text-center w-1/3">
+                                    <div class="text-sm text-gray-500">14/07 • 16:00</div>
+                                    <div class="font-bold text-lg mt-1">VS</div>
+                                    <div class="text-xs bg-gray-100 rounded-full px-2 py-1 inline-block mt-1">Fonte Nova</div>
+                                </div>
+                                <div class="flex items-center justify-end w-1/3">
+                                    <span class="font-medium truncate">Grêmio</span>
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/1_amOGD7Q6pQn0XqvbFEVQw_48x48.png" alt="Grêmio" class="team-logo ml-2">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Jogo 4 -->
+                        <div class="match-card p-4 hover:bg-blue-50">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center w-1/3">
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/3KYMDEQ8Lv5v1OBQ1Xlllg_48x48.png" alt="Athletico-PR" class="team-logo">
+                                    <span class="font-medium truncate">Athletico-PR</span>
+                                </div>
+                                <div class="text-center w-1/3">
+                                    <div class="text-sm text-gray-500">15/07 • 19:30</div>
+                                    <div class="font-bold text-lg mt-1">VS</div>
+                                    <div class="text-xs bg-gray-100 rounded-full px-2 py-1 inline-block mt-1">Arena da Baixada</div>
+                                </div>
+                                <div class="flex items-center justify-end w-1/3">
+                                    <span class="font-medium truncate">Fluminense</span>
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/SDfohqMvqgZeN1bMRs7j5w_48x48.png" alt="Fluminense" class="team-logo ml-2">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Jogo 5 -->
+                        <div class="match-card p-4 hover:bg-blue-50">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center w-1/3">
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/1kk3ZSTsWq4eeCADeGfxNA_48x48.png" alt="Atlético-MG" class="team-logo">
+                                    <span class="font-medium truncate">Atlético-MG</span>
+                                </div>
+                                <div class="text-center w-1/3">
+                                    <div class="text-sm text-gray-500">16/07 • 20:00</div>
+                                    <div class="font-bold text-lg mt-1">VS</div>
+                                    <div class="text-xs bg-gray-100 rounded-full px-2 py-1 inline-block mt-1">Arena MRV</div>
+                                </div>
+                                <div class="flex items-center justify-end w-1/3">
+                                    <span class="font-medium truncate">Bragantino</span>
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/1x2iF3Zb4wUEWQkO8tJAKw_48x48.png" alt="Bragantino" class="team-logo ml-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 text-center">
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Ver todos os jogos →</a>
+                    </div>
+                </div>
+
+                <!-- Artilharia -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-yellow-600 px-6 py-4">
+                        <h2 class="text-xl font-bold text-white flex items-center">
+                            <i class="fas fa-futbol mr-2"></i> Artilharia
+                        </h2>
+                    </div>
+                    <div class="divide-y divide-gray-200">
+                        <!-- Artilheiro 1 -->
+                        <div class="p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="font-bold text-gray-900 mr-3">1</span>
+                                    <div class="top-scorer">
+                                        <span class="font-medium">Gabriel Barbosa</span>
+                                        <span class="text-xs bg-gray-100 rounded-full px-2 py-1 ml-2">Flamengo</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-yellow-600">10 gols</span>
+                            </div>
+                        </div>
+                        <!-- Artilheiro 2 -->
+                        <div class="p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="font-bold text-gray-900 mr-3">2</span>
+                                    <div class="top-scorer">
+                                        <span class="font-medium">Hulk</span>
+                                        <span class="text-xs bg-gray-100 rounded-full px-2 py-1 ml-2">Atlético-MG</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-yellow-600">9 gols</span>
+                            </div>
+                        </div>
+                        <!-- Artilheiro 3 -->
+                        <div class="p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="font-bold text-gray-900 mr-3">3</span>
+                                    <div class="top-scorer">
+                                        <span class="font-medium">Raphael Veiga</span>
+                                        <span class="text-xs bg-gray-100 rounded-full px-2 py-1 ml-2">Palmeiras</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-yellow-600">8 gols</span>
+                            </div>
+                        </div>
+                        <!-- Artilheiro 4 -->
+                        <div class="p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="font-bold text-gray-900 mr-3">4</span>
+                                    <div class="top-scorer">
+                                        <span class="font-medium">Tiquinho Soares</span>
+                                        <span class="text-xs bg-gray-100 rounded-full px-2 py-1 ml-2">Botafogo</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-yellow-600">7 gols</span>
+                            </div>
+                        </div>
+                        <!-- Artilheiro 5 -->
+                        <div class="p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="font-bold text-gray-900 mr-3">5</span>
+                                    <div class="top-scorer">
+                                        <span class="font-medium">Canobbio</span>
+                                        <span class="text-xs bg-gray-100 rounded-full px-2 py-1 ml-2">Athletico-PR</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-yellow-600">6 gols</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 text-center">
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Ver artilharia completa →</a>
+                    </div>
+                </div>
+
+                <!-- Destaque -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-purple-600 px-6 py-4">
+                        <h2 class="text-xl font-bold text-white flex items-center">
+                            <i class="fas fa-star mr-2"></i> Destaque da Rodada
+                        </h2>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-3">
+                            <img src="https://ssl.gstatic.com/onebox/media/sports/logos/KLDWYp-Ga4i4H6-Yu5W3kQ_48x48.png" alt="Flamengo" class="team-logo">
+                            <span class="font-bold">Flamengo</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm text-gray-600">4</span>
+                            <span class="text-sm font-bold">Placar</span>
+                            <span class="text-sm text-gray-600">1</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm">Gols: Gabigol (2), Arrascaeta, Pedro</span>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <p>O Flamengo goleou o Corinthians no Maracanã e assumiu a liderança do Brasileirão. Gabigol marcou dois gols e foi eleito o melhor em campo.</p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 text-center">
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Ver mais destaques →</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
 
-    <script>
-        // Simple tab functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('.flex.border-b button');
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    // Remove active class from all tabs
-                    tabs.forEach(t => t.classList.remove('tab-active'));
-                    // Add active class to clicked tab
-                    this.classList.add('tab-active');
-                });
-            });
-        });
-    </script>
+        <footer class="mt-12 text-center text-gray-600 text-sm">
+            <p>Dados atualizados em 21 de maio de 2025 • Fonte: CBF</p>
+            <p class="mt-2">© 2025 Brasileirão Série A - Todos os direitos reservados</p>
+        </footer>
+    </div>
 </body>
 </html>
