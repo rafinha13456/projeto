@@ -63,11 +63,10 @@
                     <i class="fas fa-flag mr-1"></i> Rodada:
                 </span>
                 <div class="flex space-x-1 overflow-x-auto pb-2">
-                    <button onclick="changeRound(10)" class="round-selector active px-4 py-2 rounded-lg bg-blue-100 text-blue-600">10</button>
-                    <button onclick="changeRound(11)" class="round-selector px-4 py-2 rounded-lg bg-gray-100 text-gray-700">11</button>
-                    <button onclick="changeRound(12)" class="round-selector px-4 py-2 rounded-lg bg-gray-100 text-gray-700">12</button>
+                    <button onclick="changeRound(12)" class="round-selector active px-4 py-2 rounded-lg bg-blue-100 text-blue-600">12</button>
                     <button onclick="changeRound(13)" class="round-selector px-4 py-2 rounded-lg bg-gray-100 text-gray-700">13</button>
                     <button onclick="changeRound(14)" class="round-selector px-4 py-2 rounded-lg bg-gray-100 text-gray-700">14</button>
+                    <button onclick="changeRound(15)" class="round-selector px-4 py-2 rounded-lg bg-gray-100 text-gray-700">15</button>
                 </div>
             </div>
         </div>
@@ -92,120 +91,138 @@
     <script>
         // Dados dos jogos por rodada
         const matchesData = {
-            10: [
+            12: [
                 {
-                    date: "Quarta, 04/06",
-                    time: "20:00",
+                    date: "",
+                    time: "Adiado",
                     homeTeam: "Botafogo",
                     homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Botafogo_de_Futebol_e_Regatas_logo.svg/250px-Botafogo_de_Futebol_e_Regatas_logo.svg.png",
-                    awayTeam: "Ceará",
-                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Cear%C3%A1_Sporting_Club_logo.svg/1200px-Cear%C3%A1_Sporting_Club_logo.svg.png",
+                    awayTeam: "Mirassol",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/c/ce/Escudo_de_2022_do_Mirassol_Futebol_Clube.png/250px-Escudo_de_2022_do_Mirassol_Futebol_Clube.png",
                     stadium: "Nilton Santos"
                 },
                 {
-                    date: "Sábado, 15/04",
-                    time: "19:00",
-                    homeTeam: "Corinthians",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/0ZJ2ZieLv8WYRl31gPeNOA_48x48.png",
+                    date: "",
+                    time: "Adiado",
+                    homeTeam: "Fluminense",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Fluminense_FC_escudo.png/640px-Fluminense_FC_escudo.png",
+                    awayTeam: "Ceará",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Cear%C3%A1_Sporting_Club_logo.svg/800px-Cear%C3%A1_Sporting_Club_logo.svg.png",
+                    stadium: "Maracanã"
+                },
+                {
+                    date: "",
+                    time: "Adiado",
+                    homeTeam: "Sport Refice",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/1/17/Sport_Club_do_Recife.png/250px-Sport_Club_do_Recife.png",
                     awayTeam: "Flamengo",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    stadium: "Neo Química Arena"
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Flamengo_braz_logo.svg/250px-Flamengo_braz_logo.svg.png",
+                    stadium: "Ilha do Retiro"
                 },
                 {
-                    date: "Sábado, 15/04",
-                    time: "16:00",
-                    homeTeam: "Flamengo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Maracanã"
-                },
-                {
-                    date: "Sábado, 15/04",
-                    time: "16:00",
-                    homeTeam: "Flamengo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Maracanã"
-                },
-                {
-                    date: "Sábado, 15/04",
-                    time: "16:00",
-                    homeTeam: "Flamengo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Maracanã"
-                },
-                {
-                    date: "Sábado, 15/04",
-                    time: "16:00",
-                    homeTeam: "Flamengo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Maracanã"
-                },
-                {
-                    date: "Sábado, 15/04",
-                    time: "16:00",
-                    homeTeam: "Flamengo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Maracanã"
-                },
-                {
-                    date: "Sábado, 15/04",
-                    time: "16:00",
-                    homeTeam: "Flamengo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Maracanã"
-                },
-                {
-                    date: "Sábado, 15/04",
-                    time: "16:00",
-                    homeTeam: "Flamengo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Maracanã"
-                },
-                {
-                    date: "Sábado, 15/04",
-                    time: "16:00",
-                    homeTeam: "Flamengo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Maracanã"
+                    date: "",
+                    time: "Adiado",
+                    homeTeam: "Palmeiras",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Palmeiras_logo.svg/250px-Palmeiras_logo.svg.png",
+                    awayTeam: "Juventude",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/EC_Juventude.svg/140px-EC_Juventude.svg.png",
+                    stadium: "Allianz Parque"
                 },
                 
             ],
-            11: [
+            13: [
                 {
-                    date: "Domingo, 16/04",
-                    time: "16:00",
-                    homeTeam: "Palmeiras",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    awayTeam: "Corinthians",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/0ZJ2ZieLv8WYRl31gPeNOA_48x48.png",
-                    stadium: "Allianz Parque"
+                    date: "12/07 Sábado",
+                    time: "16:30",
+                    homeTeam: "Internacional",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/SC_Internacional_Brazil_Logo.svg/250px-SC_Internacional_Brazil_Logo.svg.png",
+                    awayTeam: "Vitória",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/3/34/Esporte_Clube_Vit%C3%B3ria_logo.png/120px-Esporte_Clube_Vit%C3%B3ria_logo.png",
+                    stadium: "Beira-Rio"
                 },
                 {
-                    date: "Domingo, 16/04",
-                    time: "18:30",
-                    homeTeam: "São Paulo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
+                    date: "12/07 Sábado",
+                    time: "21:00",
+                    homeTeam: "Bahia",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/9/90/ECBahia.png/250px-ECBahia.png",
+                    awayTeam: "Atlético-MG",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Atletico_mineiro_galo.png/250px-Atletico_mineiro_galo.png",
+                    stadium: "Arena Fonte Nova"
+                },
+                {
+                    date: "13/07 Domingo",
+                    time: "19:00",
+                    homeTeam: "Corinthians",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Escudo_sc_corinthians.png/250px-Escudo_sc_corinthians.png",
+                    awayTeam: "RB Bragantino",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/9/9e/RedBullBragantino.png/250px-RedBullBragantino.png",
+                    stadium: "Neo Química Arena"
+                },
+                {
+                    date: "13/07 Domingo",
+                    time: "20:30",
+                    homeTeam: "Cruzeiro",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Cruzeiro_Esporte_Clube_%28logo%29.svg/250px-Cruzeiro_Esporte_Clube_%28logo%29.svg.png",
+                    awayTeam: "Grêmio",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Gremio_logo.svg/250px-Gremio_logo.svg.png",
+                    stadium: "Mineirão"
+                },
+                {
+                    date: "13/07 Domingo",
+                    time: "20:30",
+                    homeTeam: "Fortaleza",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Fortaleza_EC_2018.png/120px-Fortaleza_EC_2018.png",
+                    awayTeam: "Ceará",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Cear%C3%A1_Sporting_Club_logo.svg/800px-Cear%C3%A1_Sporting_Club_logo.svg.png",
+                    stadium: "Castelão"
+                },
+                {
+                    date: "14/07 Segunda",
+                    time: "20:00",
+                    homeTeam: "Juventude",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/EC_Juventude.svg/140px-EC_Juventude.svg.png",
+                    awayTeam: "Sport Refice",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/1/17/Sport_Club_do_Recife.png/250px-Sport_Club_do_Recife.png",
+                    stadium: "Alfredo Jaconi"
+                },
+                {
+                    date: "",
+                    time: "A confirmar",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Flamengo_braz_logo.svg/250px-Flamengo_braz_logo.svg.png",
+                    awayTeam: "São Paulo",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Brasao_do_Sao_Paulo_Futebol_Clube.svg/250px-Brasao_do_Sao_Paulo_Futebol_Clube.svg.png",
+                    stadium: "Maracanã"
+                },
+                {
+                    date: "",
+                    time: "A confirmar",
+                    homeTeam: "Vasco",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/a/ac/CRVascodaGama.png/120px-CRVascodaGama.png",
+                    awayTeam: "Botafogo",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Botafogo_de_Futebol_e_Regatas_logo.svg/250px-Botafogo_de_Futebol_e_Regatas_logo.svg.png",
+                    stadium: "Mané Garrincha"
+                },
+                {
+                    date: "",
+                    time: "A confirmar",
+                    homeTeam: "Santos",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/0/03/Escudo_do_Santos_Futebol_Clube.png/250px-Escudo_do_Santos_Futebol_Clube.png",
                     awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Morumbi"
-                }
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Palmeiras_logo.svg/250px-Palmeiras_logo.svg.png",
+                    stadium: "Vila Belmiro"
+                },
+                {
+                    date: "",
+                    time: "A confirmar",
+                    homeTeam: "Mirassol",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/c/ce/Escudo_de_2022_do_Mirassol_Futebol_Clube.png/250px-Escudo_de_2022_do_Mirassol_Futebol_Clube.png",
+                    awayTeam: "Fluminense",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Fluminense_FC_escudo.png/640px-Fluminense_FC_escudo.png",
+                    stadium: "Maião"
+                },
             ],
-            12: [
+            14: [
                 {
                     date: "Sábado, 22/04",
                     time: "16:00",
@@ -223,57 +240,172 @@
                     awayTeam: "Internacional",
                     awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/SDn6GXJvq8Zfcpd--bBZ2g_48x48.png",
                     stadium: "Arena MRV"
-                }
-            ],
-            13: [
-                {
-                    date: "Domingo, 23/04",
-                    time: "16:00",
-                    homeTeam: "Grêmio",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/Luj3Dwbx8Gqg8F5jPekWYQ_48x48.png",
-                    awayTeam: "Flamengo",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
-                    stadium: "Arena do Grêmio"
                 },
                 {
-                    date: "Domingo, 23/04",
-                    time: "18:30",
-                    homeTeam: "Botafogo",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/4Q0WB0D4w1msRZ4ZqYeG4A_48x48.png",
-                    awayTeam: "Palmeiras",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
-                    stadium: "Nilton Santos"
-                }
-            ],
-            14: [
-                {
-                    date: "Sábado, 29/04",
+                    date: "Sábado, 22/04",
                     time: "16:00",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
+                    awayTeam: "São Paulo",
+                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
+                    stadium: "Maracanã"
+                },
+                {
+                    date: "Sábado, 22/04",
+                    time: "16:00",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
+                    awayTeam: "São Paulo",
+                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
+                    stadium: "Maracanã"
+                },
+                {
+                    date: "Sábado, 22/04",
+                    time: "16:00",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
+                    awayTeam: "São Paulo",
+                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
+                    stadium: "Maracanã"
+                },
+                {
+                    date: "Sábado, 22/04",
+                    time: "16:00",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
+                    awayTeam: "São Paulo",
+                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
+                    stadium: "Maracanã"
+                },
+                {
+                    date: "Sábado, 22/04",
+                    time: "16:00",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
+                    awayTeam: "São Paulo",
+                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
+                    stadium: "Maracanã"
+                },
+                {
+                    date: "Sábado, 22/04",
+                    time: "16:00",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
+                    awayTeam: "São Paulo",
+                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
+                    stadium: "Maracanã"
+                },
+                {
+                    date: "Sábado, 22/04",
+                    time: "16:00",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
+                    awayTeam: "São Paulo",
+                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
+                    stadium: "Maracanã"
+                },
+                {
+                    date: "Sábado, 22/04",
+                    time: "16:00",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
+                    awayTeam: "São Paulo",
+                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
+                    stadium: "Maracanã"
+                },
+            ],
+            15: [
+                {
+                    date: "19/07 Sábado",
+                    time: "16:00",
+                    homeTeam: "Fortaleza",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Fortaleza_EC_2018.png/120px-Fortaleza_EC_2018.png",
+                    awayTeam: "Bahia",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/9/90/ECBahia.png/250px-ECBahia.png",
+                    stadium: "Castelão"
+                },
+                {
+                    date: "19/07 Sábado",
+                    time: "17:30",
                     homeTeam: "Vasco",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/8piQOzndGmApKYTcvyN9vA_48x48.png",
-                    awayTeam: "Flamengo",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/1AY4_-_Gq7DZt0Ktzw91RA_48x48.png",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/a/ac/CRVascodaGama.png/120px-CRVascodaGama.png",
+                    awayTeam: "Grêmio",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Gremio_logo.svg/250px-Gremio_logo.svg.png",
                     stadium: "São Januário"
                 },
                 {
-                    date: "Sábado, 29/04",
-                    time: "19:00",
-                    homeTeam: "Corinthians",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/0ZJ2ZieLv8WYRl31gPeNOA_48x48.png",
-                    awayTeam: "São Paulo",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/ByPuj3Mv8Lr6GAJj5DWEwQ_48x48.png",
-                    stadium: "Neo Química Arena"
+                    date: "19/07 Sábado",
+                    time: "18:30",
+                    homeTeam: "Mirassol",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/c/ce/Escudo_de_2022_do_Mirassol_Futebol_Clube.png/250px-Escudo_de_2022_do_Mirassol_Futebol_Clube.png",
+                    awayTeam: "Santos",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/0/03/Escudo_do_Santos_Futebol_Clube.png/250px-Escudo_do_Santos_Futebol_Clube.png",
+                    stadium: "Maião"
                 },
                 {
-                    date: "Domingo, 30/04",
+                    date: "19/07 Sábado",
+                    time: "18:30",
+                    homeTeam: "Vitória",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/3/34/Esporte_Clube_Vit%C3%B3ria_logo.png/120px-Esporte_Clube_Vit%C3%B3ria_logo.png",
+                    awayTeam: "RB Bragantino",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/9/9e/RedBullBragantino.png/250px-RedBullBragantino.png",
+                    stadium: "Barradão"
+                },
+                {
+                    date: "19/07 Sábado",
+                    time: "21:00",
+                    homeTeam: "São Paulo",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Brasao_do_Sao_Paulo_Futebol_Clube.svg/250px-Brasao_do_Sao_Paulo_Futebol_Clube.svg.png",
+                    awayTeam: "Corinthians",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Escudo_sc_corinthians.png/250px-Escudo_sc_corinthians.png",
+                    stadium: "Morumbis"
+                },
+                {
+                    date: "20/07 Domingo",
+                    time: "11:00",
+                    homeTeam: "Internacional",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/SC_Internacional_Brazil_Logo.svg/250px-SC_Internacional_Brazil_Logo.svg.png",
+                    awayTeam: "Ceará",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Cear%C3%A1_Sporting_Club_logo.svg/800px-Cear%C3%A1_Sporting_Club_logo.svg.png",
+                    stadium: "Beira-Rio"
+                },
+                {
+                    date: "20/07 Domingo",
                     time: "16:00",
+                    homeTeam: "Cruzeiro",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Cruzeiro_Esporte_Clube_%28logo%29.svg/250px-Cruzeiro_Esporte_Clube_%28logo%29.svg.png",
+                    awayTeam: "Juventude",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/EC_Juventude.svg/140px-EC_Juventude.svg.png",
+                    stadium: "Mineirão"
+                },
+                {
+                    date: "20/07 Domingo",
+                    time: "17:30",
                     homeTeam: "Palmeiras",
-                    homeLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/7spurne-xDt2p6C0imYYNA_48x48.png",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Palmeiras_logo.svg/250px-Palmeiras_logo.svg.png",
                     awayTeam: "Atlético-MG",
-                    awayLogo: "https://ssl.gstatic.com/onebox/media/sports/logos/4y6K0v8D3_F_8D3omgW0qQ_48x48.png",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Atletico_mineiro_galo.png/250px-Atletico_mineiro_galo.png",
                     stadium: "Allianz Parque"
-                }
-            ]
+                },
+                {
+                    date: "20/07 Domingo",
+                    time: "17:30",
+                    homeTeam: "Sport Recife",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/pt/thumb/1/17/Sport_Club_do_Recife.png/250px-Sport_Club_do_Recife.png",
+                    awayTeam: "Botafogo",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Botafogo_de_Futebol_e_Regatas_logo.svg/250px-Botafogo_de_Futebol_e_Regatas_logo.svg.png",
+                    stadium: "Ilha do Retiro"
+                },
+                {
+                    date: "20/07 Domingo",
+                    time: "19:30",
+                    homeTeam: "Flamengo",
+                    homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Flamengo_braz_logo.svg/250px-Flamengo_braz_logo.svg.png",
+                    awayTeam: "Fluminense",
+                    awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Fluminense_FC_escudo.png/640px-Fluminense_FC_escudo.png",
+                    stadium: "Maracanã"
+                },
+            ],      
         };
 
         // Atualiza a data atual
